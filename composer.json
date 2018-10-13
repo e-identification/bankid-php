@@ -1,0 +1,40 @@
+{
+  "name": "nicklasw/bankid-sdk",
+  "license": "MIT",
+  "description": "BankID SDK API client",
+  "require": {
+    "php": "7.1",
+    "guzzlehttp/guzzle": "^6.3",
+    "doctrine/annotations": "^1.6",
+    "runz0rd/mapper-php": "^2.2"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^7.3",
+    "phan/phan": "dev-master",
+    "symfony/validator": "^4.1",
+    "symfony/intl": "^4.1"
+  },
+  "autoload": {
+    "psr-4": {
+      "BankID\\SDK\\": "src"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Tests\\": "tests",
+      "Tests\\Src\\": "tests/src"
+    },
+    "classmap": [
+      "tests/"
+    ],
+    "files": [
+    ]
+  },
+  "scripts": {
+    "test": "vendor/bin/phpunit --verbose && vendor/bin/phpspec run --verbose",
+    "lint": "vendor/bin/phpcs --standard=ruleset.xml ./src",
+    "lint-fix": "vendor/bin/phpcbf --standard=ruleset.xml ./src",
+    "analyze": "vendor/bin/phan --color",
+    "analyze-report": "mkdir -p build/ && vendor/bin/phan -m checkstyle -o build/phan-report.cs || true"
+  }
+}

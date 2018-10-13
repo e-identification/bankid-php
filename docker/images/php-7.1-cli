@@ -1,0 +1,16 @@
+FROM nicklaswallgren/php7.1-cli
+
+MAINTAINER Nicklas Wallgren <nicklas.wallgren@gmail.com>
+
+# Install php-ast extension
+RUN git clone --branch 'v0.1.7' https://github.com/nikic/php-ast.git \
+    && cd php-ast \
+    && phpize \
+    && ./configure \
+    && make install \
+    && echo 'extension=ast.so' > /usr/local/etc/php/php.ini \
+    && cd .. && rm -rf php-ast
+
+# The application directory
+RUN mkdir -p /var/www/html
+WORKDIR /var/www/html
