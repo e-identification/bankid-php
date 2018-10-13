@@ -29,7 +29,7 @@ return [
     // If this is set to null,
     // then Phan assumes the PHP version which is closest to the minor version
     // of the php executable used to execute phan.
-    "target_php_version" => null,
+    "target_php_version" => 7.1,
 
     // Default: true. If this is set to true,
     // and target_php_version is newer than the version used to run Phan,
@@ -216,8 +216,7 @@ return [
     // If enabled (and warn_about_undocumented_throw_statements is enabled),
     // warn about function/closure/method calls that have (at)throws
     // without the invoking method documenting that exception.
-    // TODO: Enable for self-analysis
-    'warn_about_undocumented_exceptions_thrown_by_invoked_functions' => false,
+    'warn_about_undocumented_exceptions_thrown_by_invoked_functions' => true,
 
     // If this is a list, Phan will not warn about lack of documentation of (at)throws
     // for any of the listed classes or their subclasses.
@@ -257,11 +256,9 @@ return [
         'PhanPossiblyFalseTypeArgumentInternal',
         'PhanPossiblyNullTypeArgument',
         'PhanPossiblyNullTypeArgumentInternal',
-        // TODO: Fix and remove suppression for this plugin
         'PhanPluginDescriptionlessCommentOnPrivateProperty',
         'PhanPluginDescriptionlessCommentOnProtectedProperty',
         'PhanUnreferencedUseNormal',
-        'DemoPluginPropertyName',
     ],
 
     // If empty, no filter against issues types will be applied.
@@ -273,9 +270,6 @@ return [
 
     // A list of files to include in analysis
     'file_list' => [
-        'phan',
-        'phan_client',
-        'tool/make_stubs',
         // 'vendor/phpunit/phpunit/src/Framework/TestCase.php',
     ],
 
@@ -384,22 +378,11 @@ return [
         'DuplicateArrayKeyPlugin',
         'PregRegexCheckerPlugin',
         'PrintfCheckerPlugin',
-
-        // UnknownElementTypePlugin warns about unknown types in element signatures.
         'UnknownElementTypePlugin',
         'DuplicateExpressionPlugin',
-        ////////////////////////////////////////////////////////////////////////
-        // Plugins for Phan's self-analysis
-        ////////////////////////////////////////////////////////////////////////
-
-        // TODO: warn about the usage of assert() for Phan's self-analysis. See https://github.com/phan/phan/issues/288
         'NoAssertPlugin',
-
         'HasPHPDocPlugin',
 
-        ////////////////////////////////////////////////////////////////////////
-        // End plugins for Phan's self-analysis
-        ////////////////////////////////////////////////////////////////////////
 
         // 'SleepCheckerPlugin' is useful for projects which heavily use the __sleep() method. Phan doesn't use __sleep().
         // InvokePHPNativeSyntaxCheckPlugin invokes 'php --no-php-ini --syntax-check ${abs_path_to_analyzed_file}.php' and reports any error messages.

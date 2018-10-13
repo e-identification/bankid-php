@@ -27,6 +27,8 @@ class CollectPayload implements PayloadInterface
     }
 
     /**
+     * Returns the order reference.
+     *
      * @return string
      */
     public function getOrderRef(): string

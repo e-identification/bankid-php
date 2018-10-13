@@ -39,6 +39,8 @@ class User
     protected $surname;
 
     /**
+     * Returns the personal number.
+     *
      * @return string
      */
     public function getPersonalNumber(): string
@@ -47,6 +49,8 @@ class User
     }
 
     /**
+     * Returns the name.
+     *
      * @return string
      */
     public function getName(): string
@@ -55,6 +59,8 @@ class User
     }
 
     /**
+     * Returns the given name.
+     *
      * @return string
      */
     public function getGivenName(): string
@@ -63,6 +69,8 @@ class User
     }
 
     /**
+     * Returns the surname.
+     *
      * @return string
      */
     public function getSurname(): string

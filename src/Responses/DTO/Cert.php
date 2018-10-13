@@ -21,6 +21,8 @@ class Cert
     protected $notAfter;
 
     /**
+     * Returns the not before.
+     *
      * @return string
      */
     public function getNotBefore(): string
@@ -29,6 +31,8 @@ class Cert
     }
 
     /**
+     * Returns the not after.
+     *
      * @return string
      */
     public function getNotAfter(): string

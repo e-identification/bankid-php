@@ -16,6 +16,8 @@ class Device
     protected $ipAddress;
 
     /**
+     * Returns the ip address.
+     *
      * @return string
      */
     public function getIpAddress(): string

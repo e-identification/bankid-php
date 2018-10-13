@@ -32,6 +32,8 @@ abstract class Request
     }
 
     /**
+     * Executes the request.
+     *
      * @return PromiseInterface
      */
     abstract public function fire(): PromiseInterface;

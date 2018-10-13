@@ -98,6 +98,8 @@ class Collect extends Envelope
     protected $completionData;
 
     /**
+     * Returns the order reference.
+     *
      * @return string
      */
     public function getOrderRef(): string
@@ -106,16 +108,8 @@ class Collect extends Envelope
     }
 
     /**
-     * @param string $orderRef
-     * @return static
-     */
-    public function setOrderRef(string $orderRef)
-    {
-        $this->orderRef = $orderRef;
-        return $this;
-    }
-
-    /**
+     * Returns the status.
+     *
      * @return string
      */
     public function getStatus(): string
@@ -124,16 +118,8 @@ class Collect extends Envelope
     }
 
     /**
-     * @param string $status
-     * @return static
-     */
-    public function setStatus(string $status)
-    {
-        $this->status = $status;
-        return $this;
-    }
-
-    /**
+     * Returns the hint code.
+     *
      * @return string|null
      */
     public function getHintCode(): ?string
@@ -142,30 +128,12 @@ class Collect extends Envelope
     }
 
     /**
-     * @param string|null $hintCode
-     * @return static
-     */
-    public function setHintCode(?string $hintCode)
-    {
-        $this->hintCode = $hintCode;
-        return $this;
-    }
-
-    /**
+     * Returns the completion data.
+     *
      * @return CompletionData|null
      */
     public function getCompletionData(): ?CompletionData
     {
         return $this->completionData;
-    }
-
-    /**
-     * @param CompletionData|null $completionData
-     * @return static
-     */
-    public function setCompletionData(?CompletionData $completionData)
-    {
-        $this->completionData = $completionData;
-        return $this;
     }
 }

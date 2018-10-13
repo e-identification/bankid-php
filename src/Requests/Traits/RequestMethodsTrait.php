@@ -46,6 +46,7 @@ trait RequestMethodsTrait
                 return rejection_for($exception);
             }
 
+            // @phan-suppress-next-line PhanUndeclaredMethod
             return $this->decode($exception->getResponse(), $serializer);
         });
     }
@@ -78,6 +79,7 @@ trait RequestMethodsTrait
             return false;
         }
 
+        // @phan-suppress-next-line PhanTypeMismatchArgument
         return $this->isResponseDefined($exception);
     }
 

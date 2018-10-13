@@ -21,6 +21,8 @@ class Authentication extends Envelope
     protected $autoStartToken;
 
     /**
+     * Returns the order reference.
+     *
      * @return string|null
      */
     public function getOrderRef(): ?string
@@ -29,6 +31,8 @@ class Authentication extends Envelope
     }
 
     /**
+     * Returns the auto start token.
+     *
      * @return string|null
      */
     public function getAutoStartToken(): ?string

@@ -28,6 +28,8 @@ class InvalidRequestException extends Exception
     }
 
     /**
+     * Returns the payload.
+     *
      * @return string
      */
     public function getPayload(): string

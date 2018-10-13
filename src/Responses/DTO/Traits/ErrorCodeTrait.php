@@ -2,6 +2,12 @@
 
 namespace BankID\SDK\Responses\DTO\Traits;
 
+/**
+ * Trait ErrorCodeTrait
+ *
+ * @package BankID\SDK\Responses\DTO\Traits
+ * @phan-file-suppress PhanUndeclaredConstant
+ */
 trait ErrorCodeTrait
 {
 

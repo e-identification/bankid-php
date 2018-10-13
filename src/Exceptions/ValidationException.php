@@ -17,7 +17,7 @@ class ValidationException extends Exception
     /**
      * @var ConstraintViolationListInterface
      */
-    private $errors;
+    protected $errors;
 
     /**
      * ValidationException constructor.
@@ -38,6 +38,8 @@ class ValidationException extends Exception
     }
 
     /**
+     * Returns the list of errors.
+     *
      * @return ConstraintViolationListInterface
      */
     public function getErrors(): ConstraintViolationListInterface

@@ -11,26 +11,14 @@ use Exception;
  */
 class MissingOptionsException extends Exception
 {
-    /**
-     * @var string
-     */
-    protected $payload;
 
     /**
-     * InvalidRequestException constructor.
+     * MissingOptionsException constructor.
      *
-     * @param string $payload
+     * @param string $message
      */
-    public function __construct(string $payload)
+    public function __construct(string $message)
     {
-        $this->payload = $payload;
-    }
-
-    /**
-     * @return string
-     */
-    public function getPayload(): string
-    {
-        return $this->payload;
+        $this->message = $message;
     }
 }
