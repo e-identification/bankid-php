@@ -31,7 +31,9 @@ class Requirement
     protected $autoStartTokenRequired;
 
     /**
-     * @return null|string
+     * Returns the card reader.
+     *
+     * @return string|null
      */
     public function getCardReader()
     {
@@ -39,6 +41,8 @@ class Requirement
     }
 
     /**
+     * Sets the card reader.
+     *
      * @param string|null $cardReader
      * @return static
      */
@@ -49,6 +53,8 @@ class Requirement
     }
 
     /**
+     * Returns the certificate policies.
+     *
      * @return string|null
      */
     public function getCertificatePolicies(): ?string
@@ -57,6 +63,8 @@ class Requirement
     }
 
     /**
+     * Sets the certificate policies.
+     *
      * @param string|null $certificatePolicies
      * @return static
      */
@@ -67,6 +75,8 @@ class Requirement
     }
 
     /**
+     * Returns the issuer cn.
+     *
      * @return string|null
      */
     public function getIssuerCn(): ?string
@@ -75,6 +85,8 @@ class Requirement
     }
 
     /**
+     * Sets the issuer cn.
+     *
      * @param string|null $issuerCn
      * @return static
      */
@@ -85,6 +97,8 @@ class Requirement
     }
 
     /**
+     * Returns the auto start token required.
+     *
      * @return string|null
      */
     public function getAutoStartTokenRequired(): ?string
@@ -93,6 +107,8 @@ class Requirement
     }
 
     /**
+     * Sets the auto start token required.
+     *
      * @param string|null $autoStartTokenRequired
      * @return static
      */

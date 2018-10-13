@@ -57,6 +57,8 @@ class CompletionData
     protected $ocspResponse;
 
     /**
+     * Returns the user.
+     *
      * @return User
      */
     public function getUser(): User
@@ -65,6 +67,8 @@ class CompletionData
     }
 
     /**
+     * Returns the device.
+     *
      * @return Device
      */
     public function getDevice(): Device
@@ -73,14 +77,18 @@ class CompletionData
     }
 
     /**
+     * Returns the certificate.
+     *
      * @return Cert
      */
-    public function getCert(): Cert
+    public function getCertificate(): Cert
     {
         return $this->cert;
     }
 
     /**
+     * Returns the signature.
+     *
      * @return string
      */
     public function getSignature(): string
@@ -89,6 +97,8 @@ class CompletionData
     }
 
     /**
+     * Returns the ocsp response.
+     *
      * @return string
      */
     public function getOcspResponse(): string

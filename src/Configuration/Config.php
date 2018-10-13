@@ -28,7 +28,7 @@ class Config
     /**
      * @var string|null
      */
-    protected $caCert;
+    protected $caCertificate;
 
     /**
      * Config constructor.
@@ -43,12 +43,14 @@ class Config
     ) {
         $this->environment = $environment;
         $this->certificate = $certificate;
-        $this->caCert = $caCert;
+        $this->caCertificate = $caCert;
 
         Assert::oneOf($environment, [self::ENVIRONMENT_TEST, self::ENVIRONMENT_PRODUCTION]);
     }
 
     /**
+     * Returns the environment.
+     *
      * @return string
      */
     public function getEnvironment(): string
@@ -57,6 +59,8 @@ class Config
     }
 
     /**
+     * Returns the path to the certificate.
+     *
      * @return string|null
      */
     public function getCertificate(): ?string
@@ -65,6 +69,8 @@ class Config
     }
 
     /**
+     * Returns true if the certificate is defined, false otherwise.
+     *
      * @return bool
      */
     public function isCertificateDefined(): bool
@@ -73,18 +79,22 @@ class Config
     }
 
     /**
+     * Returns the path to the CA certificate.
+     *
      * @return string|null
      */
-    public function getCaCert(): ?string
+    public function getCaCertificate(): ?string
     {
-        return $this->caCert;
+        return $this->caCertificate;
     }
 
     /**
+     * Returns true if the CA certificate is defined, false otherwise.
+     *
      * @return bool
      */
-    public function isCaCertDefined(): bool
+    public function isCaCertificateDefined(): bool
     {
-        return $this->caCert !== null;
+        return $this->caCertificate !== null;
     }
 }

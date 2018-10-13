@@ -97,6 +97,8 @@ class SignPayload implements PayloadInterface
     }
 
     /**
+     * Returns the user visisble data.
+     *
      * @return string
      */
     public function getUserVisibleData(): string
@@ -105,6 +107,8 @@ class SignPayload implements PayloadInterface
     }
 
     /**
+     * Returns the user none visible data.
+     *
      * @return string|null
      */
     public function getUserNonVisibleData(): ?string

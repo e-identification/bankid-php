@@ -58,7 +58,7 @@ class ResponseSerializer implements SerializerInterface
             return $this->envelope;
         }
 
-        $this->envelope->mapFromJson((string)$response->getBody());
+        $this->envelope->mapFromJson($body);
 
         return $this->envelope;
     }

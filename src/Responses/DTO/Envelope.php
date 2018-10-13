@@ -36,7 +36,9 @@ abstract class Envelope
     protected $details;
 
     /**
-     * @return null|string
+     * Returns the error code.
+     *
+     * @return string|null
      */
     public function getErrorCode()
     {
@@ -44,6 +46,8 @@ abstract class Envelope
     }
 
     /**
+     * Returns the details.
+     *
      * @return null|string
      */
     public function getDetails()
@@ -52,6 +56,8 @@ abstract class Envelope
     }
 
     /**
+     * Returns true if the request was successful, false otherwise.
+     *
      * @return bool
      */
     public function isSuccess()

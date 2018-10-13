@@ -61,6 +61,8 @@ class AuthenticationPayload implements PayloadInterface
     }
 
     /**
+     * Returns the personal number.
+     *
      * @return string
      */
     public function getPersonalNumber(): string
@@ -69,6 +71,8 @@ class AuthenticationPayload implements PayloadInterface
     }
 
     /**
+     * Returns the end user IP.
+     *
      * @return string
      */
     public function getEndUserIp(): string
@@ -77,6 +81,8 @@ class AuthenticationPayload implements PayloadInterface
     }
 
     /**
+     * Returns the requirement.
+     *
      * @return Requirement|null
      */
     public function getRequirement(): ?Requirement

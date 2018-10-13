@@ -55,10 +55,10 @@ class ConfigHandler
      */
     protected function addCaCertFileIfExists(array &$result, Config $config)
     {
-        if (!$config->isCaCertDefined()) {
+        if (!$config->isCaCertificateDefined()) {
             return;
         }
 
-        $result['verify'] = $config->getCaCert();
+        $result['verify'] = $config->getCaCertificate();
     }
 }

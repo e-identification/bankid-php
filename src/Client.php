@@ -54,6 +54,7 @@ class Client
     public function authenticate(AuthenticationPayload $payload): PromiseInterface
     {
         return task(function () use ($payload): PromiseInterface {
+            // @phan-suppress-next-line PhanThrowTypeAbsentForCall
             $this->validatePrerequisites($payload);
 
             return (new AuthenticationRequest($this->requestClient, $payload))->fire();
@@ -72,6 +73,7 @@ class Client
     public function sign(SignPayload $payload): PromiseInterface
     {
         return task(function () use ($payload): PromiseInterface {
+            // @phan-suppress-next-line PhanThrowTypeAbsentForCall
             $this->validatePrerequisites($payload);
 
             return (new SignRequest($this->requestClient, $payload))->fire();
@@ -91,6 +93,7 @@ class Client
     public function collect(CollectPayload $payload): PromiseInterface
     {
         return task(function () use ($payload): PromiseInterface {
+            // @phan-suppress-next-line PhanThrowTypeAbsentForCall
             $this->validatePrerequisites($payload);
 
             return (new CollectRequest($this->requestClient, $payload))->fire();
@@ -109,6 +112,7 @@ class Client
     public function cancel(CancelPayload $payload): PromiseInterface
     {
         return task(function () use ($payload): PromiseInterface {
+            // @phan-suppress-next-line PhanThrowTypeAbsentForCall
             $this->validatePrerequisites($payload);
 
             return (new CancelRequest($this->requestClient, $payload))->fire();

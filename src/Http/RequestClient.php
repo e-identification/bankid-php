@@ -13,6 +13,7 @@ use BankID\SDK\Configuration\Config;
 use BankID\SDK\Http\Handlers\ConfigHandler;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
+use Throwable;
 
 /**
  * Class RequestClient
@@ -47,30 +48,8 @@ class RequestClient
     /**
      * Sends the HTTP request.
      *
-     * @param Request $request
-     * @return ResponseInterface|null
-     * @throws Exception
-     */
-    public function request(Request $request): ?ResponseInterface
-    {
-        $response = null;
-
-        try {
-            $response = $this->client->send($request, $this->options());
-        } catch (ClientException $e) {
-            // Retrieve the response envelope content
-            $response = $e->getResponse();
-        }
-
-        return $response;
-    }
-
-    /**
-     * Sends the HTTP request.
-     *
      * @param RequestInterface $request
      * @return PromiseInterface
-     * @throws Exception
      */
     public function requestAsync(RequestInterface $request): PromiseInterface
     {
@@ -78,7 +57,7 @@ class RequestClient
 
         try {
             $response = $this->client->sendAsync($request, $this->options());
-        } catch (ClientException $e) {
+        } catch (ClientException | Throwable $e) {
             $response = rejection_for($e);
         }
 
@@ -96,6 +75,8 @@ class RequestClient
     }
 
     /**
+     * Returns the curl options.
+     *
      * @return array
      */
     protected function options(): array
