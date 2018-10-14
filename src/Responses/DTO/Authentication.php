@@ -39,4 +39,6 @@ class Authentication extends Envelope
     {
         return $this->autoStartToken;
     }
+
+    // TODO, able to call collect endpoint
 }

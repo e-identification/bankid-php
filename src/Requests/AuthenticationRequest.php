@@ -2,6 +2,7 @@
 
 namespace BankID\SDK\Requests;
 
+use Doctrine\Common\Annotations\Reader;
 use GuzzleHttp\Promise\PromiseInterface;
 use BankID\SDK\Http\Builders\GenericRequestBuilder;
 use BankID\SDK\Http\RequestClient;
@@ -26,16 +27,23 @@ class AuthenticationRequest extends Request
     protected $payload;
 
     /**
+     * @var Reader
+     */
+    protected $annotationReader;
+
+    /**
      * AuthRequest constructor.
      *
      * @param RequestClient         $httpClient
+     * @param Reader                $annotationReader
      * @param AuthenticationPayload $payload
      */
-    public function __construct(RequestClient $httpClient, AuthenticationPayload $payload)
+    public function __construct(RequestClient $httpClient, Reader $annotationReader, AuthenticationPayload $payload)
     {
-        parent::__construct($httpClient);
+        parent::__construct($httpClient, $annotationReader);
 
         $this->payload = $payload;
+        $this->httpClient = $httpClient;
     }
 
     /**
@@ -47,7 +55,7 @@ class AuthenticationRequest extends Request
     {
         return task(function (): PromiseInterface {
             // Build the request instance
-            $request = (new GenericRequestBuilder(self::URI, $this->httpClient->getConfig()))
+            $request = (new GenericRequestBuilder(self::URI, $this->httpClient->getConfig(), $this->annotationReader))
                 ->setPayload($this->payload);
 
             // Return a promise chain

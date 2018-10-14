@@ -2,12 +2,14 @@
 
 namespace BankID\SDK\Requests\Payload\Serializers;
 
-use Doctrine\Common\Annotations\AnnotationReader;
 use BankID\SDK\Annotations\Base64Encoding;
 use BankID\SDK\Annotations\Parameter;
 use BankID\SDK\Requests\Payload\Interfaces\PayloadInterface;
 use BankID\SDK\Requests\Payload\Interfaces\PayloadSerializerInterface;
+use Doctrine\Common\Annotations\AnnotationReader;
+use Doctrine\Common\Annotations\Reader;
 use ReflectionClass;
+use ReflectionException;
 use ReflectionProperty;
 
 /**
@@ -21,16 +23,16 @@ class PayloadSerializer implements PayloadSerializerInterface
     protected const EMPTY_BODY = '';
 
     /**
-     * @var AnnotationReader
+     * @var Reader
      */
     protected $reader;
 
     /**
      * PayloadSerializer constructor.
      *
-     * @param AnnotationReader $reader
+     * @param Reader $reader
      */
-    public function __construct(AnnotationReader $reader)
+    public function __construct(Reader $reader)
     {
         $this->reader = $reader;
     }
@@ -40,6 +42,7 @@ class PayloadSerializer implements PayloadSerializerInterface
      *
      * @param PayloadInterface $subject
      * @return string
+     * @throws ReflectionException
      */
     public function encode(PayloadInterface $subject): string
     {
