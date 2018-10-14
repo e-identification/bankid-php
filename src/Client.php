@@ -2,9 +2,6 @@
 
 namespace BankID\SDK;
 
-use Doctrine\Common\Annotations\AnnotationException;
-use Doctrine\Common\Annotations\AnnotationReader;
-use GuzzleHttp\Promise\PromiseInterface;
 use BankID\SDK\Exceptions\ValidationException;
 use BankID\SDK\Http\RequestClient;
 use BankID\SDK\Requests\AuthenticationRequest;
@@ -16,6 +13,10 @@ use BankID\SDK\Requests\Payload\CollectPayload;
 use BankID\SDK\Requests\Payload\Interfaces\PayloadInterface;
 use BankID\SDK\Requests\Payload\SignPayload;
 use BankID\SDK\Requests\SignRequest;
+use Doctrine\Common\Annotations\AnnotationException;
+use Doctrine\Common\Annotations\AnnotationReader;
+use Doctrine\Common\Annotations\Reader;
+use GuzzleHttp\Promise\PromiseInterface;
 use Symfony\Component\Validator\Validation;
 use function GuzzleHttp\Promise\task;
 
@@ -33,13 +34,21 @@ class Client
     protected $requestClient;
 
     /**
+     * @var Reader
+     */
+    protected $annotationReader;
+
+    /**
      * Client constructor.
      *
      * @param RequestClient $requestClient
+     * @param Reader|null   $annotationReader
+     * @throws AnnotationException
      */
-    public function __construct(RequestClient $requestClient)
+    public function __construct(RequestClient $requestClient, ?Reader $annotationReader = null)
     {
         $this->requestClient = $requestClient;
+        $this->annotationReader = $annotationReader ?? new AnnotationReader();
     }
 
     /**
@@ -47,7 +56,6 @@ class Client
      *
      * @description Use the collect method to query the status of the order.
      * If the request is successful, the orderRef and autoStartToken is returned.
-     *
      * @param AuthenticationPayload $payload
      * @return PromiseInterface
      */
@@ -57,7 +65,7 @@ class Client
             // @phan-suppress-next-line PhanThrowTypeAbsentForCall
             $this->validatePrerequisites($payload);
 
-            return (new AuthenticationRequest($this->requestClient, $payload))->fire();
+            return (new AuthenticationRequest($this->requestClient, $this->annotationReader, $payload))->fire();
         });
     }
 
@@ -66,7 +74,6 @@ class Client
      *
      * @description Use the collect method to query the status of the order.
      * If the request is successful, the orderRef and autoStartToken is returned.
-     *
      * @param SignPayload $payload
      * @return PromiseInterface
      */
@@ -76,7 +83,7 @@ class Client
             // @phan-suppress-next-line PhanThrowTypeAbsentForCall
             $this->validatePrerequisites($payload);
 
-            return (new SignRequest($this->requestClient, $payload))->fire();
+            return (new SignRequest($this->requestClient, $this->annotationReader, $payload))->fire();
         });
     }
 
@@ -86,7 +93,6 @@ class Client
      * @description
      * RP should keep calling collect every two seconds as long as status indicates pending.
      * RP must bort if status indicates failed. The user identity is returned when complete.
-     *
      * @param CollectPayload $payload
      * @return PromiseInterface
      */
@@ -96,7 +102,7 @@ class Client
             // @phan-suppress-next-line PhanThrowTypeAbsentForCall
             $this->validatePrerequisites($payload);
 
-            return (new CollectRequest($this->requestClient, $payload))->fire();
+            return (new CollectRequest($this->requestClient, $this->annotationReader, $payload))->fire();
         });
     }
 
@@ -105,7 +111,6 @@ class Client
      *
      * @description
      * This is typically used if the user cancels the order in your service or app.
-     *
      * @param $payload
      * @return PromiseInterface
      */
@@ -115,7 +120,7 @@ class Client
             // @phan-suppress-next-line PhanThrowTypeAbsentForCall
             $this->validatePrerequisites($payload);
 
-            return (new CancelRequest($this->requestClient, $payload))->fire();
+            return (new CancelRequest($this->requestClient, $this->annotationReader, $payload))->fire();
         });
     }
 
