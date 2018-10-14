@@ -5,6 +5,7 @@
   "require": {
     "php": "7.x",
     "ext-curl": "*",
+    "ext-json": "*",
     "guzzlehttp/guzzle": "^6.3",
     "doctrine/annotations": "^1.6",
     "runz0rd/mapper-php": "^2.2"
