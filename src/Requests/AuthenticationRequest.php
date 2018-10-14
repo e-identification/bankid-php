@@ -2,6 +2,7 @@
 
 namespace BankID\SDK\Requests;
 
+use BankID\SDK\Client;
 use Doctrine\Common\Annotations\Reader;
 use GuzzleHttp\Promise\PromiseInterface;
 use BankID\SDK\Http\Builders\GenericRequestBuilder;
@@ -22,6 +23,11 @@ class AuthenticationRequest extends Request
     protected const URI = 'auth';
 
     /**
+     * @var Client
+     */
+    protected $client;
+
+    /**
      * @var AuthenticationPayload
      */
     protected $payload;
@@ -32,16 +38,18 @@ class AuthenticationRequest extends Request
     protected $annotationReader;
 
     /**
-     * AuthRequest constructor.
+     * AuthenticationRequest constructor.
      *
+     * @param Client                $client
      * @param RequestClient         $httpClient
      * @param Reader                $annotationReader
      * @param AuthenticationPayload $payload
      */
-    public function __construct(RequestClient $httpClient, Reader $annotationReader, AuthenticationPayload $payload)
+    public function __construct(Client $client, RequestClient $httpClient, Reader $annotationReader, AuthenticationPayload $payload)
     {
         parent::__construct($httpClient, $annotationReader);
 
+        $this->client = $client;
         $this->payload = $payload;
         $this->httpClient = $httpClient;
     }
@@ -59,7 +67,7 @@ class AuthenticationRequest extends Request
                 ->setPayload($this->payload);
 
             // Return a promise chain
-            return $this->request($request->build(), new ResponseSerializer(new Authentication()));
+            return $this->request($request->build(), new ResponseSerializer(new Authentication($this->client)));
         });
     }
 }

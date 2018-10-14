@@ -65,7 +65,7 @@ class Client
             // @phan-suppress-next-line PhanThrowTypeAbsentForCall
             $this->validatePrerequisites($payload);
 
-            return (new AuthenticationRequest($this->requestClient, $this->annotationReader, $payload))->fire();
+            return (new AuthenticationRequest($this, $this->requestClient, $this->annotationReader, $payload))->fire();
         });
     }
 
@@ -83,7 +83,7 @@ class Client
             // @phan-suppress-next-line PhanThrowTypeAbsentForCall
             $this->validatePrerequisites($payload);
 
-            return (new SignRequest($this->requestClient, $this->annotationReader, $payload))->fire();
+            return (new SignRequest($this, $this->requestClient, $this->annotationReader, $payload))->fire();
         });
     }
 
