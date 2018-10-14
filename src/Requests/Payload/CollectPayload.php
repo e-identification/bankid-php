@@ -21,6 +21,11 @@ class CollectPayload implements PayloadInterface
      */
     protected $orderRef;
 
+    /**
+     * CollectPayload constructor.
+     *
+     * @param string $orderRef
+     */
     public function __construct(string $orderRef)
     {
         $this->orderRef = $orderRef;

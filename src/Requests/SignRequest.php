@@ -2,6 +2,7 @@
 
 namespace BankID\SDK\Requests;
 
+use BankID\SDK\Client;
 use BankID\SDK\Http\Builders\GenericRequestBuilder;
 use BankID\SDK\Http\RequestClient;
 use BankID\SDK\Requests\Payload\SignPayload;
@@ -22,6 +23,11 @@ class SignRequest extends Request
     protected const URI = 'sign';
 
     /**
+     * @var Client
+     */
+    protected $client;
+
+    /**
      * @var SignPayload
      */
     protected $payload;
@@ -29,14 +35,20 @@ class SignRequest extends Request
     /**
      * SignRequest constructor.
      *
+     * @param Client        $client
      * @param RequestClient $httpClient
      * @param Reader        $annotationReader
      * @param SignPayload   $payload
      */
-    public function __construct(RequestClient $httpClient, Reader $annotationReader, SignPayload $payload)
-    {
+    public function __construct(
+        Client $client,
+        RequestClient $httpClient,
+        Reader $annotationReader,
+        SignPayload $payload
+    ) {
         parent::__construct($httpClient, $annotationReader);
 
+        $this->client = $client;
         $this->payload = $payload;
     }
 
@@ -53,7 +65,7 @@ class SignRequest extends Request
                 ->setPayload($this->payload);
 
             // Return a promise chain
-            return $this->request($request->build(), new ResponseSerializer(new Sign()));
+            return $this->request($request->build(), new ResponseSerializer(new Sign($this->client)));
         });
     }
 }

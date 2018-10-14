@@ -31,6 +31,8 @@ class Base64Length extends Constraint
      */
     public function __construct(array $options)
     {
+        parent::__construct($options);
+
         // TODO, typehint array
         
         if ($options['length']) {

@@ -6,7 +6,6 @@ use BankID\SDK\Annotations\Base64Encoding;
 use BankID\SDK\Annotations\Parameter;
 use BankID\SDK\Requests\Payload\Interfaces\PayloadInterface;
 use BankID\SDK\Requests\Payload\Interfaces\PayloadSerializerInterface;
-use Doctrine\Common\Annotations\AnnotationReader;
 use Doctrine\Common\Annotations\Reader;
 use ReflectionClass;
 use ReflectionException;
@@ -70,7 +69,7 @@ class PayloadSerializer implements PayloadSerializerInterface
      * @param string             $annotation
      * @return Parameter|null
      */
-    protected function getPropertyAnnotation(ReflectionProperty $property, $annotation)
+    protected function getPropertyAnnotation(ReflectionProperty $property, string $annotation): ?Parameter
     {
         return $this->reader->getPropertyAnnotation(
             $property,

@@ -2,18 +2,15 @@
 
 namespace BankID\SDK\Http;
 
-use Exception;
+use BankID\SDK\Configuration\Config;
+use BankID\SDK\Http\Handlers\ConfigHandler;
 use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Promise\PromiseInterface;
-use function GuzzleHttp\Promise\rejection_for;
-use GuzzleHttp\Psr7\Request;
-use BankID\SDK\Configuration\Config;
-use BankID\SDK\Http\Handlers\ConfigHandler;
 use Psr\Http\Message\RequestInterface;
-use Psr\Http\Message\ResponseInterface;
 use Throwable;
+use function GuzzleHttp\Promise\rejection_for;
 
 /**
  * Class RequestClient

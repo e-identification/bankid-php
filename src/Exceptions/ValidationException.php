@@ -3,7 +3,6 @@
 namespace BankID\SDK\Exceptions;
 
 use Exception;
-use Throwable;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 
 /**

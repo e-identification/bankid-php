@@ -82,6 +82,15 @@ class SignPayload implements PayloadInterface
      */
     protected $requirement;
 
+    /**
+     * SignPayload constructor.
+     *
+     * @param string           $personalNumber
+     * @param string           $endUserIp
+     * @param string           $userVisibleData
+     * @param Requirement|null $requirement
+     * @param null|string      $userNonVisibleData
+     */
     public function __construct(
         string $personalNumber,
         string $endUserIp,
