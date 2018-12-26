@@ -2,15 +2,17 @@
 
 namespace BankID\SDK\Requests;
 
-use Doctrine\Common\Annotations\Reader;
-use GuzzleHttp\Promise\PromiseInterface;
 use BankID\SDK\Http\RequestClient;
 use BankID\SDK\Requests\Traits\RequestMethodsTrait;
+use Doctrine\Common\Annotations\Reader;
+use GuzzleHttp\Promise\PromiseInterface;
 
 /**
  * Class Request
  *
- * @package BankID\SDK\Requests
+ * @package            BankID\SDK\Requests
+ * @internal
+ * @phan-file-suppress PhanAccessMethodInternal
  */
 abstract class Request
 {

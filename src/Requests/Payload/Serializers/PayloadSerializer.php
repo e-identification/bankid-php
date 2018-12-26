@@ -14,7 +14,8 @@ use ReflectionProperty;
 /**
  * Class PayloadSerializer
  *
- * @package BankID\SDK\Requests\Payload\Serializers
+ * @package            BankID\SDK\Requests\Payload\Serializers
+ * @phan-file-suppress PhanAccessMethodInternal, PhanAccessClassConstantInternal
  */
 class PayloadSerializer implements PayloadSerializerInterface
 {

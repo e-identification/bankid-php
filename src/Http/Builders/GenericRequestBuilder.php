@@ -13,6 +13,7 @@ use ReflectionException;
  * Class GenericRequestBuilder
  *
  * @package BankID\SDK\Http\Builders
+ * @internal
  */
 class GenericRequestBuilder extends AbstractRequestBuilder
 {

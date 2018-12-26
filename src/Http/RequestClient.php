@@ -15,7 +15,9 @@ use function GuzzleHttp\Promise\rejection_for;
 /**
  * Class RequestClient
  *
- * @package BankID\SDK\Http
+ * @package            BankID\SDK\Http
+ * @internal
+ * @phan-file-suppress PhanAccessMethodInternal
  */
 class RequestClient
 {

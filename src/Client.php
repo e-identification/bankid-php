@@ -24,6 +24,7 @@ use function GuzzleHttp\Promise\task;
  * Class Client
  *
  * @package BankID\SDK
+ * @phan-file-suppress PhanAccessMethodInternal
  */
 class Client
 {

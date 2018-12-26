@@ -2,11 +2,11 @@
 
 namespace BankID\SDK\Requests\Traits;
 
-use GuzzleHttp\Exception\RequestException;
-use GuzzleHttp\Promise\PromiseInterface;
 use BankID\SDK\Http\RequestClient;
 use BankID\SDK\Responses\DTO\Envelope;
 use BankID\SDK\Responses\Interfaces\SerializerInterface;
+use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\Promise\PromiseInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface as HttpResponseInterface;
 use Throwable;
@@ -16,7 +16,8 @@ use function GuzzleHttp\Promise\task;
 /**
  * Class RequestMethodsTrait
  *
- * @package BankID\SDK\Requests\Traits
+ * @package            BankID\SDK\Requests\Traits
+ * @phan-file-suppress PhanAccessMethodInternal
  */
 trait RequestMethodsTrait
 {

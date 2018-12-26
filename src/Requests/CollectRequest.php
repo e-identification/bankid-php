@@ -2,20 +2,22 @@
 
 namespace BankID\SDK\Requests;
 
-use Doctrine\Common\Annotations\Reader;
-use GuzzleHttp\Promise\PromiseInterface;
 use BankID\SDK\Http\Builders\GenericRequestBuilder;
 use BankID\SDK\Http\RequestClient;
 use BankID\SDK\Requests\Payload\CollectPayload;
 use BankID\SDK\Requests\Payload\SignPayload;
 use BankID\SDK\Responses\DTO\Collect;
 use BankID\SDK\Responses\Serializers\ResponseSerializer;
+use Doctrine\Common\Annotations\Reader;
+use GuzzleHttp\Promise\PromiseInterface;
 use function GuzzleHttp\Promise\task;
 
 /**
  * Class CollectRequest
  *
- * @package BankID\SDK\Requests
+ * @package            BankID\SDK\Requests
+ * @internal
+ * @phan-file-suppress PhanAccessMethodInternal
  */
 class CollectRequest extends Request
 {

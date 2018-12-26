@@ -9,6 +9,7 @@ use Symfony\Component\Validator\ConstraintValidator;
  * Class Base64LengthValidator
  *
  * @package BankID\SDK\Validators
+ * @internal
  */
 class Base64LengthValidator extends ConstraintValidator
 {

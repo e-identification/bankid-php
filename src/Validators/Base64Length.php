@@ -2,18 +2,22 @@
 
 namespace BankID\SDK\Validators;
 
-use Symfony\Component\Validator\Constraint;
 use BankID\SDK\Exceptions\MissingOptionsException;
+use Symfony\Component\Validator\Constraint;
 
 /**
  * Class Base64Length
+ *
  * @Annotation
  * @package BankID\SDK\Validators
+ * @internal
  */
 class Base64Length extends Constraint
 {
+
     /**
      * Error message
+     *
      * @var string
      */
     public $message = "The string is to long when encoded as base64.";
@@ -34,7 +38,7 @@ class Base64Length extends Constraint
         parent::__construct($options);
 
         // TODO, typehint array
-        
+
         if ($options['length']) {
             $this->length = $options['length'];
         } else {

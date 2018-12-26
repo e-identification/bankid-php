@@ -8,6 +8,7 @@ use GuzzleHttp\Psr7\Request;
  * Class AbstractRequestBuilder
  *
  * @package BankID\SDK\Http\Builders
+ * @internal
  */
 abstract class AbstractRequestBuilder
 {

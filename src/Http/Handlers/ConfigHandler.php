@@ -8,6 +8,7 @@ use BankID\SDK\Configuration\Config;
  * Class ConfigHandler
  *
  * @package BankID\SDK\Http\Handlers
+ * @internal
  */
 class ConfigHandler
 {

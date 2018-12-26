@@ -3,19 +3,21 @@
 namespace BankID\SDK\Requests;
 
 use BankID\SDK\Client;
-use Doctrine\Common\Annotations\Reader;
-use GuzzleHttp\Promise\PromiseInterface;
 use BankID\SDK\Http\Builders\GenericRequestBuilder;
 use BankID\SDK\Http\RequestClient;
 use BankID\SDK\Requests\Payload\AuthenticationPayload;
 use BankID\SDK\Responses\DTO\Authentication;
 use BankID\SDK\Responses\Serializers\ResponseSerializer;
+use Doctrine\Common\Annotations\Reader;
+use GuzzleHttp\Promise\PromiseInterface;
 use function GuzzleHttp\Promise\task;
 
 /**
  * Class AuthenticationRequest
  *
- * @package BankID\SDK\Requests
+ * @package            BankID\SDK\Requests
+ * @internal
+ * @phan-file-suppress PhanAccessMethodInternal
  */
 class AuthenticationRequest extends Request
 {
@@ -45,8 +47,12 @@ class AuthenticationRequest extends Request
      * @param Reader                $annotationReader
      * @param AuthenticationPayload $payload
      */
-    public function __construct(Client $client, RequestClient $httpClient, Reader $annotationReader, AuthenticationPayload $payload)
-    {
+    public function __construct(
+        Client $client,
+        RequestClient $httpClient,
+        Reader $annotationReader,
+        AuthenticationPayload $payload
+    ) {
         parent::__construct($httpClient, $annotationReader);
 
         $this->client = $client;

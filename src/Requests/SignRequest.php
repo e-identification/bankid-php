@@ -15,7 +15,9 @@ use function GuzzleHttp\Promise\task;
 /**
  * Class SignRequest
  *
- * @package BankID\SDK\Requests
+ * @package            BankID\SDK\Requests
+ * @internal
+ * @phan-file-suppress PhanAccessMethodInternal
  */
 class SignRequest extends Request
 {

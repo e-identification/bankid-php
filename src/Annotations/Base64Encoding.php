@@ -8,10 +8,10 @@ namespace BankID\SDK\Annotations;
  * @package MB\Agresso\XML\Example\Annotations
  * @Annotation
  * @Target("PROPERTY")
+ * @internal
  */
 class Base64Encoding
 {
-
 
 
 }
