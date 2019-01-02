@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace BankID\SDK\Exceptions;
 
 use Exception;
@@ -27,7 +29,7 @@ class ValidationException extends Exception
     {
         $this->errors = $errors;
 
-        $message = sprintf(
+        $message = \sprintf(
             'A property validation error occurred. %s (%s)',
             $errors->get(0)->getMessage(),
             $errors->get(0)->getPropertyPath()

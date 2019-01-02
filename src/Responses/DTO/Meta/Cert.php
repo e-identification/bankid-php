@@ -1,6 +1,10 @@
 <?php
 
-namespace BankID\SDK\Responses\DTO;
+declare(strict_types=1);
+
+namespace BankID\SDK\Responses\DTO\Meta;
+
+use Tebru\Gson\Annotation\SerializedName;
 
 /**
  * Class Cert
@@ -11,11 +15,13 @@ class Cert
 {
 
     /**
+     * @SerializedName("notBefore")
      * @var string
      */
     protected $notBefore;
 
     /**
+     * @SerializedName("notAfter")
      * @var string
      */
     protected $notAfter;

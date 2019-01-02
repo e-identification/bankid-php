@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace BankID\SDK\Validators;
 
 use Symfony\Component\Validator\Constraint;
@@ -9,6 +11,7 @@ use Symfony\Component\Validator\ConstraintValidator;
  * Class Base64LengthValidator
  *
  * @package BankID\SDK\Validators
+ * @internal
  */
 class Base64LengthValidator extends ConstraintValidator
 {
@@ -26,7 +29,7 @@ class Base64LengthValidator extends ConstraintValidator
             return;
         }
 
-        $based = base64_encode($value);
+        $based = \base64_encode($value);
 
         if (!($constraint instanceof Base64Length)) {
             return;
@@ -34,7 +37,8 @@ class Base64LengthValidator extends ConstraintValidator
 
         /** @var Base64Length $constraint */
         $length = $constraint->getLength();
-        if (strlen($based) > $length) {
+
+        if (\strlen($based) > $length) {
             $this->context->buildViolation($constraint->message)
                 ->addViolation();
         }

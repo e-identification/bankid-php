@@ -3,8 +3,6 @@ version: '2.2'
 networks:
     public:
         driver: bridge
-    private:
-        driver: bridge
 
 services:
   php-cli:

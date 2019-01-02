@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace BankID\SDK\Requests\Payload;
 
 use BankID\SDK\Annotations;

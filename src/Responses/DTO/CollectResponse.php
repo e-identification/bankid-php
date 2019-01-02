@@ -1,13 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 namespace BankID\SDK\Responses\DTO;
+
+use BankID\SDK\Responses\DTO\Meta\CompletionData;
+use Tebru\Gson\Annotation\SerializedName;
 
 /**
  * Class Collect
  *
  * @package BankID\SDK\Responses\DTO
  */
-class Collect extends Envelope
+class CollectResponse extends Envelope
 {
 
     /**
@@ -72,6 +77,7 @@ class Collect extends Envelope
     /**
      * The @code orderRef in question.
      *
+     * @SerializedName("orderRef")
      * @var string
      */
     protected $orderRef;
@@ -86,6 +92,7 @@ class Collect extends Envelope
     /**
      * Only present for pending and failed orders.
      *
+     * @SerializedName("hintCode")
      * @var string|null
      */
     protected $hintCode;
@@ -93,6 +100,7 @@ class Collect extends Envelope
     /**
      * Only present for complete orders.
      *
+     * @SerializedName("completionData")
      * @var CompletionData
      */
     protected $completionData;

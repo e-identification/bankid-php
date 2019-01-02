@@ -1,6 +1,10 @@
 <?php
 
-namespace BankID\SDK\Responses\DTO;
+declare(strict_types=1);
+
+namespace BankID\SDK\Responses\DTO\Meta;
+
+use Tebru\Gson\Annotation\SerializedName;
 
 /**
  * Class User
@@ -13,6 +17,7 @@ class User
     /**
      * The personal number.
      *
+     * @SerializedName("personalNumber")
      * @var string
      */
     protected $personalNumber;
@@ -27,6 +32,7 @@ class User
     /**
      * The given name of the user.
      *
+     * @SerializedName("givenName")
      * @var string
      */
     protected $givenName;

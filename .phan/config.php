@@ -271,6 +271,7 @@ return [
     // A list of files to include in analysis
     'file_list' => [
         // 'vendor/phpunit/phpunit/src/Framework/TestCase.php',
+        'src/definitions.php'
     ],
 
     // A regular expression to match files to be excluded
@@ -311,7 +312,7 @@ return [
         'vendor/guzzlehttp/guzzle/',
         'vendor/guzzlehttp/psr7/',
         'vendor/psr/http-message/',
-        'vendor/runz0rd/mapper-php/',
+        'vendor/tebru/gson-php/',
     ],
 
     // List of case-insensitive file extensions supported by Phan.

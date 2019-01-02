@@ -1,21 +1,23 @@
 <?php
 
+declare(strict_types=1);
+
 namespace BankID\SDK\Requests;
 
-use BankID\SDK\Client;
-use Doctrine\Common\Annotations\Reader;
-use GuzzleHttp\Promise\PromiseInterface;
+use BankID\SDK\ClientAsynchronous;
 use BankID\SDK\Http\Builders\GenericRequestBuilder;
-use BankID\SDK\Http\RequestClient;
 use BankID\SDK\Requests\Payload\AuthenticationPayload;
-use BankID\SDK\Responses\DTO\Authentication;
+use BankID\SDK\Responses\DTO\AuthenticationResponse;
 use BankID\SDK\Responses\Serializers\ResponseSerializer;
+use GuzzleHttp\Promise\PromiseInterface;
 use function GuzzleHttp\Promise\task;
 
 /**
  * Class AuthenticationRequest
  *
- * @package BankID\SDK\Requests
+ * @package            BankID\SDK\Requests
+ * @internal
+ * @phan-file-suppress PhanAccessMethodInternal
  */
 class AuthenticationRequest extends Request
 {
@@ -23,7 +25,7 @@ class AuthenticationRequest extends Request
     protected const URI = 'auth';
 
     /**
-     * @var Client
+     * @var ClientAsynchronous
      */
     protected $client;
 
@@ -33,41 +35,33 @@ class AuthenticationRequest extends Request
     protected $payload;
 
     /**
-     * @var Reader
-     */
-    protected $annotationReader;
-
-    /**
      * AuthenticationRequest constructor.
      *
-     * @param Client                $client
-     * @param RequestClient         $httpClient
-     * @param Reader                $annotationReader
+     * @param ClientAsynchronous                $client
      * @param AuthenticationPayload $payload
      */
-    public function __construct(Client $client, RequestClient $httpClient, Reader $annotationReader, AuthenticationPayload $payload)
+    public function __construct(ClientAsynchronous $client, AuthenticationPayload $payload)
     {
-        parent::__construct($httpClient, $annotationReader);
+        parent::__construct($client->getClient(), $client->getAnnotationReader(), $client->getConfig());
 
         $this->client = $client;
         $this->payload = $payload;
-        $this->httpClient = $httpClient;
     }
 
     /**
      * Executes the request.
      *
-     * @return PromiseInterface
+     * @return PromiseInterface<AuthenticationResponse>
      */
     public function fire(): PromiseInterface
     {
         return task(function (): PromiseInterface {
             // Build the request instance
-            $request = (new GenericRequestBuilder(self::URI, $this->httpClient->getConfig(), $this->annotationReader))
+            $request = (new GenericRequestBuilder(self::URI, $this->config, $this->annotationReader))
                 ->setPayload($this->payload);
 
             // Return a promise chain
-            return $this->request($request->build(), new ResponseSerializer(new Authentication($this->client)));
+            return $this->request($request->build(), new ResponseSerializer(new AuthenticationResponse($this->client)));
         });
     }
 }

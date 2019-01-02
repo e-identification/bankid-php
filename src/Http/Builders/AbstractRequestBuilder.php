@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace BankID\SDK\Http\Builders;
 
 use GuzzleHttp\Psr7\Request;
@@ -8,6 +10,7 @@ use GuzzleHttp\Psr7\Request;
  * Class AbstractRequestBuilder
  *
  * @package BankID\SDK\Http\Builders
+ * @internal
  */
 abstract class AbstractRequestBuilder
 {
@@ -59,8 +62,6 @@ abstract class AbstractRequestBuilder
      */
     protected function getHeaders(): array
     {
-        // TODO, typehint the array
-
         return ['Content-Type' => 'application/json'];
     }
 

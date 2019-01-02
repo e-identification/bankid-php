@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace BankID\SDK\Responses\DTO;
 
 /**
@@ -7,7 +9,7 @@ namespace BankID\SDK\Responses\DTO;
  *
  * @package BankID\SDK\Responses\DTO
  */
-class Sign extends Authentication
+class SignResponse extends AuthenticationResponse
 {
 
 

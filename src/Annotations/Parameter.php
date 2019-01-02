@@ -1,13 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace BankID\SDK\Annotations;
 
 /**
  * Class TagName
  *
- * @package MB\Agresso\XML\Example\Annotations
+ * @package BankID\SDK\Annotations
  * @Annotation
  * @Target("PROPERTY")
+ * @internal
  */
 class Parameter
 {
