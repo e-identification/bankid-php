@@ -1,6 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace BankID\SDK\Responses\DTO\Traits;
+
+use const BankID\SDK\Responses\ERROR_CODE_ALREADY_IN_PROGRESS;
 
 /**
  * Trait ErrorCodeTrait
@@ -22,6 +26,6 @@ trait ErrorCodeTrait
      */
     public function isAlreadyInProgress(): bool
     {
-        return $this->errorCode === self::ERROR_CODE_ALREADY_IN_PROGRESS;
+        return $this->errorCode === ERROR_CODE_ALREADY_IN_PROGRESS;
     }
 }

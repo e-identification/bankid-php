@@ -1,12 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace BankID\SDK\Responses\DTO;
 
-use BankID\SDK\Client;
+use BankID\SDK\ClientAsynchronous;
 use BankID\SDK\Requests\Payload\CancelPayload;
 use BankID\SDK\Requests\Payload\CollectPayload;
 use Exception;
 use GuzzleHttp\Promise\PromiseInterface;
+use Tebru\Gson\Annotation\SerializedName;
 use function GuzzleHttp\Promise\rejection_for;
 
 /**
@@ -14,30 +17,32 @@ use function GuzzleHttp\Promise\rejection_for;
  *
  * @package BankID\SDK\Responses\DTO
  */
-class Authentication extends Envelope
+class AuthenticationResponse extends Envelope
 {
 
     /**
+     * @SerializedName("orderRef")
      * @var string|null
      */
     protected $orderRef;
 
     /**
+     * @SerializedName("autoStartToken")
      * @var string|null
      */
     protected $autoStartToken;
 
     /**
-     * @var Client
+     * @var ClientAsynchronous
      */
     protected $client;
 
     /**
      * Authentication constructor.
      *
-     * @param Client $client
+     * @param ClientAsynchronous $client
      */
-    public function __construct(Client $client)
+    public function __construct(ClientAsynchronous $client)
     {
         $this->client = $client;
     }

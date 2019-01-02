@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace BankID\SDK\Http\Builders;
 
 use BankID\SDK\Configuration\Config;
@@ -8,6 +10,7 @@ use BankID\SDK\Requests\Payload\Interfaces\PayloadSerializerInterface;
 use BankID\SDK\Requests\Payload\Serializers\PayloadSerializer;
 use Doctrine\Common\Annotations\Reader;
 use ReflectionException;
+use const BankID\SDK\ENVIRONMENT_PRODUCTION;
 
 /**
  * Class GenericRequestBuilder
@@ -86,13 +89,13 @@ class GenericRequestBuilder extends AbstractRequestBuilder
         $endpointUrl = self::ENDPOINT_TEST_URL;
 
         switch ($this->config->getEnvironment()) {
-            case Config::ENVIRONMENT_PRODUCTION:
+            case ENVIRONMENT_PRODUCTION:
                 $endpointUrl = self::ENDPOINT_PROD_URL;
 
                 break;
         }
 
-        return sprintf('%s/%s', $endpointUrl, $this->uri);
+        return \sprintf('%s/%s', $endpointUrl, $this->uri);
     }
 
     /**

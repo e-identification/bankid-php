@@ -1,14 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace BankID\SDK\Requests;
 
+use BankID\SDK\ClientAsynchronous;
 use BankID\SDK\Http\Builders\GenericRequestBuilder;
-use BankID\SDK\Http\RequestClient;
 use BankID\SDK\Requests\Payload\CollectPayload;
 use BankID\SDK\Requests\Payload\SignPayload;
-use BankID\SDK\Responses\DTO\Collect;
+use BankID\SDK\Responses\DTO\CollectResponse;
 use BankID\SDK\Responses\Serializers\ResponseSerializer;
-use Doctrine\Common\Annotations\Reader;
 use GuzzleHttp\Promise\PromiseInterface;
 use function GuzzleHttp\Promise\task;
 
@@ -32,13 +33,12 @@ class CollectRequest extends Request
     /**
      * SignRequest constructor.
      *
-     * @param RequestClient  $httpClient
-     * @param Reader         $annotationReader
+     * @param ClientAsynchronous         $client
      * @param CollectPayload $payload
      */
-    public function __construct(RequestClient $httpClient, Reader $annotationReader, CollectPayload $payload)
+    public function __construct(ClientAsynchronous $client, CollectPayload $payload)
     {
-        parent::__construct($httpClient, $annotationReader);
+        parent::__construct($client->getClient(), $client->getAnnotationReader(), $client->getConfig());
 
         $this->payload = $payload;
     }
@@ -52,11 +52,11 @@ class CollectRequest extends Request
     {
         return task(function (): PromiseInterface {
             // Build the request instance
-            $request = (new GenericRequestBuilder(self::URI, $this->httpClient->getConfig(), $this->annotationReader))
+            $request = (new GenericRequestBuilder(self::URI, $this->config, $this->annotationReader))
                 ->setPayload($this->payload);
 
             // Return a promise chain
-            return $this->request($request->build(), new ResponseSerializer(new Collect()));
+            return $this->request($request->build(), new ResponseSerializer(new CollectResponse()));
         });
     }
 }

@@ -1,13 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace BankID\SDK\Requests;
 
+use BankID\SDK\ClientAsynchronous;
 use BankID\SDK\Http\Builders\GenericRequestBuilder;
-use BankID\SDK\Http\RequestClient;
 use BankID\SDK\Requests\Payload\CancelPayload;
-use BankID\SDK\Responses\DTO\Cancel;
+use BankID\SDK\Responses\DTO\CancelResponse;
 use BankID\SDK\Responses\Serializers\ResponseSerializer;
-use Doctrine\Common\Annotations\Reader;
 use GuzzleHttp\Promise\PromiseInterface;
 use function GuzzleHttp\Promise\task;
 
@@ -31,13 +32,12 @@ class CancelRequest extends Request
     /**
      * SignRequest constructor.
      *
-     * @param RequestClient $httpClient
-     * @param Reader        $annotationReader
+     * @param ClientAsynchronous        $client
      * @param CancelPayload $payload
      */
-    public function __construct(RequestClient $httpClient, Reader $annotationReader, CancelPayload $payload)
+    public function __construct(ClientAsynchronous $client, CancelPayload $payload)
     {
-        parent::__construct($httpClient, $annotationReader);
+        parent::__construct($client->getClient(), $client->getAnnotationReader(), $client->getConfig());
 
         $this->payload = $payload;
     }
@@ -51,11 +51,11 @@ class CancelRequest extends Request
     {
         return task(function (): PromiseInterface {
             // Build the request instance
-            $request = (new GenericRequestBuilder(self::URI, $this->httpClient->getConfig(), $this->annotationReader))
+            $request = (new GenericRequestBuilder(self::URI, $this->config, $this->annotationReader))
                 ->setPayload($this->payload);
 
             // Return a promise chain
-            return $this->request($request->build(), new ResponseSerializer(new Cancel()));
+            return $this->request($request->build(), new ResponseSerializer(new CancelResponse()));
         });
     }
 }

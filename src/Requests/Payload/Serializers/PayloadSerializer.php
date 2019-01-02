@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace BankID\SDK\Requests\Payload\Serializers;
 
 use BankID\SDK\Annotations\Base64Encoding;
@@ -46,12 +48,27 @@ class PayloadSerializer implements PayloadSerializerInterface
      */
     public function encode(PayloadInterface $subject): string
     {
+        $properties = $this->getPropertyValues($subject);
+
+        return \json_encode($properties) ?: self::EMPTY_BODY;
+    }
+
+    /**
+     * Returns the property values.
+     *
+     * @param PayloadInterface $subject
+     * @return array
+     * @throws ReflectionException
+     */
+    protected function getPropertyValues(PayloadInterface $subject): array
+    {
+        $result = [];
         $class = new ReflectionClass($subject);
 
-        $result = [];
-
         foreach ($class->getProperties() as $property) {
-            $annotation = $this->getPropertyAnnotation($property, Parameter::class);
+            if (($annotation = $this->getPropertyAnnotation($property, Parameter::class)) === null) {
+                continue;
+            }
 
             if (($value = $this->getPropertyValue($property, $subject)) === null) {
                 continue;
@@ -60,17 +77,18 @@ class PayloadSerializer implements PayloadSerializerInterface
             $result[$annotation->getAlias()] = $value;
         }
 
-        return json_encode($result) ?: self::EMPTY_BODY;
+        return $result;
     }
+
 
     /**
      * Returns the property annotation.
      *
      * @param ReflectionProperty $property
-     * @param string             $annotation
-     * @return Parameter|null
+     * @param string $annotation
+     * @return object|null
      */
-    protected function getPropertyAnnotation(ReflectionProperty $property, string $annotation): ?Parameter
+    protected function getPropertyAnnotation(ReflectionProperty $property, string $annotation)
     {
         return $this->reader->getPropertyAnnotation(
             $property,
@@ -82,22 +100,26 @@ class PayloadSerializer implements PayloadSerializerInterface
      * Returns the property value.
      *
      * @param ReflectionProperty $property
-     * @param PayloadInterface   $subject
+     * @param PayloadInterface $subject
      * @return mixed
+     * @throws ReflectionException
      */
     protected function getPropertyValue(ReflectionProperty $property, PayloadInterface $subject)
     {
         $property->setAccessible(true);
-        $value = $property->getValue($subject);
 
-        if ($value === null) {
+        if (($value = $property->getValue($subject)) === null) {
             return null;
+        }
+
+        if ($value instanceof PayloadInterface) {
+            return $this->getPropertyValues($value);
         }
 
         if ($this->getPropertyAnnotation($property, Base64Encoding::class) === null) {
             return $value;
         }
 
-        return base64_encode($value);
+        return \base64_encode($value);
     }
 }

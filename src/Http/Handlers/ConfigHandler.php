@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace BankID\SDK\Http\Handlers;
 
 use BankID\SDK\Configuration\Config;
@@ -23,8 +25,6 @@ class ConfigHandler
     {
         $array = [];
 
-        // TODO, typehint array
-
         $this->addCertificateFileIfExists($array, $config);
         $this->addCaCertFileIfExists($array, $config);
 
@@ -40,10 +40,6 @@ class ConfigHandler
      */
     protected function addCertificateFileIfExists(array &$result, Config $config)
     {
-        if (!$config->isCertificateDefined()) {
-            return;
-        }
-
         $result['cert'] = $config->getCertificate();
     }
 
@@ -57,6 +53,8 @@ class ConfigHandler
     protected function addCaCertFileIfExists(array &$result, Config $config)
     {
         if (!$config->isCaCertificateDefined()) {
+            $result['verify'] = false;
+
             return;
         }
 

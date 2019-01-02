@@ -1,10 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace BankID\SDK\Requests;
 
-use BankID\SDK\Http\RequestClient;
+use BankID\SDK\Configuration\Config;
 use BankID\SDK\Requests\Traits\RequestMethodsTrait;
 use Doctrine\Common\Annotations\Reader;
+use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Promise\PromiseInterface;
 
 /**
@@ -20,7 +23,7 @@ abstract class Request
     use RequestMethodsTrait;
 
     /**
-     * @var RequestClient
+     * @var ClientInterface
      */
     protected $httpClient;
 
@@ -30,15 +33,22 @@ abstract class Request
     protected $annotationReader;
 
     /**
+     * @var Config
+     */
+    protected $config;
+
+    /**
      * Request constructor.
      *
-     * @param RequestClient $httpClient
-     * @param Reader        $annotationReader
+     * @param ClientInterface $httpClient
+     * @param Reader          $annotationReader
+     * @param Config          $config
      */
-    public function __construct(RequestClient $httpClient, Reader $annotationReader)
+    public function __construct(ClientInterface $httpClient, Reader $annotationReader, Config $config)
     {
         $this->httpClient = $httpClient;
         $this->annotationReader = $annotationReader;
+        $this->config = $config;
     }
 
     /**

@@ -1,9 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace BankID\SDK\Requests\Payload;
 
 use BankID\SDK\Annotations;
 use BankID\SDK\Requests\Payload\Interfaces\PayloadInterface;
+use BankID\SDK\Requests\Payload\Meta\RequirementMeta;
 use BankID\SDK\Validators as BankIDAssert;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -30,6 +33,7 @@ class SignPayload implements PayloadInterface
      *     match=true,
      *     message="Your personal number cannot contain a number"
      * )
+     * @Assert\NotBlank()
      * @var string
      */
     protected $personalNumber;
@@ -78,7 +82,7 @@ class SignPayload implements PayloadInterface
      * Requirements on how the auth or sign order must be performed.
      * @Annotations\Parameter("requirement")
      *
-     * @var Requirement|null
+     * @var RequirementMeta|null
      */
     protected $requirement;
 
@@ -88,14 +92,14 @@ class SignPayload implements PayloadInterface
      * @param string           $personalNumber
      * @param string           $endUserIp
      * @param string           $userVisibleData
-     * @param Requirement|null $requirement
+     * @param RequirementMeta|null $requirement
      * @param null|string      $userNonVisibleData
      */
     public function __construct(
         string $personalNumber,
         string $endUserIp,
         string $userVisibleData,
-        ?Requirement $requirement = null,
+        ?RequirementMeta $requirement = null,
         ?string $userNonVisibleData = null
     ) {
         $this->personalNumber = $personalNumber;
@@ -106,7 +110,7 @@ class SignPayload implements PayloadInterface
     }
 
     /**
-     * Returns the user visisble data.
+     * Returns the user visible data.
      *
      * @return string
      */

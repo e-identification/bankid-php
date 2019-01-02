@@ -1,6 +1,10 @@
 <?php
 
-namespace BankID\SDK\Responses\DTO;
+declare(strict_types=1);
+
+namespace BankID\SDK\Responses\DTO\Meta;
+
+use Tebru\Gson\Annotation\SerializedName;
 
 /**
  * Class Device
@@ -11,6 +15,7 @@ class Device
 {
 
     /**
+     * @SerializedName("ipAddress")
      * @var string
      */
     protected $ipAddress;

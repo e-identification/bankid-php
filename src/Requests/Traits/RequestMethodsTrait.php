@@ -1,10 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace BankID\SDK\Requests\Traits;
 
-use BankID\SDK\Http\RequestClient;
+use BankID\SDK\Configuration\Config;
+use BankID\SDK\Http\Handlers\ConfigHandler;
 use BankID\SDK\Responses\DTO\Envelope;
 use BankID\SDK\Responses\Interfaces\SerializerInterface;
+use GuzzleHttp\ClientInterface;
+use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Promise\PromiseInterface;
 use Psr\Http\Message\RequestInterface;
@@ -23,21 +28,26 @@ trait RequestMethodsTrait
 {
 
     /**
-     * @var RequestClient
+     * @var ClientInterface
      */
     protected $httpClient;
+
+    /**
+     * @var Config
+     */
+    protected $config;
 
     /**
      * Asynchronous request.
      *
      * @param RequestInterface    $request
      * @param SerializerInterface $serializer
-     * @return mixed
+     * @return PromiseInterface
      */
-    protected function request(RequestInterface $request, SerializerInterface $serializer)
+    protected function request(RequestInterface $request, SerializerInterface $serializer): PromiseInterface
     {
         // Execute the asynchronous request
-        $promise = $this->httpClient->requestAsync($request);
+        $promise = $this->requestAsync($request);
 
         // Return a promise chain
         return $promise->then(function (HttpResponseInterface $response) use ($serializer): PromiseInterface {
@@ -50,6 +60,37 @@ trait RequestMethodsTrait
             // @phan-suppress-next-line PhanUndeclaredMethod
             return $this->decode($exception->getResponse(), $serializer);
         });
+    }
+
+    /**
+     * Sends the HTTP request.
+     *
+     * @param RequestInterface $request
+     * @return PromiseInterface
+     */
+    protected function requestAsync(RequestInterface $request): PromiseInterface
+    {
+        $response = null;
+
+        try {
+            $response = $this->httpClient->sendAsync($request, $this->options());
+        } catch (ClientException | Throwable $e) {
+            $response = rejection_for($e);
+        }
+
+        return $response;
+    }
+
+    /**
+     * Returns the curl options.
+     *
+     * @return array
+     */
+    protected function options(): array
+    {
+        $default = ['http_errors' => false];
+
+        return array_merge((new ConfigHandler())->asArray($this->config), $default);
     }
 
     /**

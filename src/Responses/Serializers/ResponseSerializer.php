@@ -1,12 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace BankID\SDK\Responses\Serializers;
 
-use Exception;
 use BankID\SDK\Exceptions\InvalidRequestException;
 use BankID\SDK\Responses\DTO\Envelope;
 use BankID\SDK\Responses\Interfaces\SerializerInterface;
+use Exception;
+use LogicException;
 use Psr\Http\Message\ResponseInterface as HttpResponseInterface;
+use Tebru\Gson\Gson;
 
 /**
  * Class ResponseSerializer
@@ -46,7 +50,8 @@ class ResponseSerializer implements SerializerInterface
      *
      * @param HttpResponseInterface $response
      * @return Envelope
-     * @throws Exception
+     * @throws InvalidRequestException
+     * @throws LogicException
      */
     public function decode(HttpResponseInterface $response): Envelope
     {
@@ -58,9 +63,7 @@ class ResponseSerializer implements SerializerInterface
             return $this->envelope;
         }
 
-        $this->envelope->mapFromJson($body);
-
-        return $this->envelope;
+        return (Gson::builder()->build())->fromJson($body, $this->envelope);
     }
 
     /**
@@ -82,7 +85,7 @@ class ResponseSerializer implements SerializerInterface
      */
     protected function isValidHttpResponse(HttpResponseInterface $response): bool
     {
-        return in_array($response->getStatusCode(), self::KNOWN_STATUS_CODES);
+        return \in_array($response->getStatusCode(), self::KNOWN_STATUS_CODES);
     }
 
     /**

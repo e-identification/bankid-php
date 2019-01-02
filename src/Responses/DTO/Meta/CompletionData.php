@@ -1,10 +1,15 @@
 <?php
 
-namespace BankID\SDK\Responses\DTO;
+declare(strict_types=1);
+
+namespace BankID\SDK\Responses\DTO\Meta;
+
+use Tebru\Gson\Annotation\SerializedName;
 
 /**
  * Class CompletionData
  *
+ * @IgnoreAnnotation("description")
  * @package BankID\SDK\Responses\DTO
  */
 class CompletionData
@@ -50,8 +55,9 @@ class CompletionData
      * The OCSP response.
      *
      * @description
-     * The OCSP response  is signed by a certificate that has the name issuer as the certificate being verified.
+     * The OCSP response is signed by a certificate that has the name issuer as the certificate being verified.
      *
+     * @SerializedName("ocspResponse")
      * @var string
      */
     protected $ocspResponse;

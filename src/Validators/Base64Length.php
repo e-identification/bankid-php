@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace BankID\SDK\Validators;
 
 use BankID\SDK\Exceptions\MissingOptionsException;
@@ -20,10 +22,10 @@ class Base64Length extends Constraint
      *
      * @var string
      */
-    public $message = "The string is to long when encoded as base64.";
+    public $message = 'The string is to long when encoded as base64.';
 
     /**
-     * @var ?int
+     * @var int|null
      */
     protected $length;
 
@@ -37,12 +39,10 @@ class Base64Length extends Constraint
     {
         parent::__construct($options);
 
-        // TODO, typehint array
-
         if ($options['length']) {
             $this->length = $options['length'];
         } else {
-            throw new MissingOptionsException("Option missing in Base64Length constraint.");
+            throw new MissingOptionsException('Option missing in Base64Length constraint.');
         }
     }
 

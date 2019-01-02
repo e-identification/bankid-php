@@ -1,14 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace BankID\SDK\Requests;
 
-use BankID\SDK\Client;
+use BankID\SDK\ClientAsynchronous;
 use BankID\SDK\Http\Builders\GenericRequestBuilder;
-use BankID\SDK\Http\RequestClient;
 use BankID\SDK\Requests\Payload\SignPayload;
-use BankID\SDK\Responses\DTO\Sign;
+use BankID\SDK\Responses\DTO\SignResponse;
 use BankID\SDK\Responses\Serializers\ResponseSerializer;
-use Doctrine\Common\Annotations\Reader;
 use GuzzleHttp\Promise\PromiseInterface;
 use function GuzzleHttp\Promise\task;
 
@@ -25,7 +25,7 @@ class SignRequest extends Request
     protected const URI = 'sign';
 
     /**
-     * @var Client
+     * @var ClientAsynchronous
      */
     protected $client;
 
@@ -37,18 +37,12 @@ class SignRequest extends Request
     /**
      * SignRequest constructor.
      *
-     * @param Client        $client
-     * @param RequestClient $httpClient
-     * @param Reader        $annotationReader
-     * @param SignPayload   $payload
+     * @param ClientAsynchronous      $client
+     * @param SignPayload $payload
      */
-    public function __construct(
-        Client $client,
-        RequestClient $httpClient,
-        Reader $annotationReader,
-        SignPayload $payload
-    ) {
-        parent::__construct($httpClient, $annotationReader);
+    public function __construct(ClientAsynchronous $client, SignPayload $payload)
+    {
+        parent::__construct($client->getClient(), $client->getAnnotationReader(), $client->getConfig());
 
         $this->client = $client;
         $this->payload = $payload;
@@ -63,11 +57,11 @@ class SignRequest extends Request
     {
         return task(function (): PromiseInterface {
             // Build the request instance
-            $request = (new GenericRequestBuilder(self::URI, $this->httpClient->getConfig(), $this->annotationReader))
+            $request = (new GenericRequestBuilder(self::URI, $this->config, $this->annotationReader))
                 ->setPayload($this->payload);
 
             // Return a promise chain
-            return $this->request($request->build(), new ResponseSerializer(new Sign($this->client)));
+            return $this->request($request->build(), new ResponseSerializer(new SignResponse($this->client)));
         });
     }
 }
