@@ -54,8 +54,13 @@ class RequirementMeta implements PayloadInterface
      * @param bool|null $autoStartTokenRequired
      * @param bool|null $allowFingerprint
      */
-    public function __construct(?string $cardReader = null, ?string $certificatePolicies = null, ?string $issuerCn = null, ?bool $autoStartTokenRequired = null, ?bool $allowFingerprint = null)
-    {
+    public function __construct(
+        ?string $cardReader = null,
+        ?string $certificatePolicies = null,
+        ?string $issuerCn = null,
+        ?bool $autoStartTokenRequired = null,
+        ?bool $allowFingerprint = null
+    ) {
         $this->cardReader = $cardReader;
         $this->certificatePolicies = $certificatePolicies;
         $this->issuerCn = $issuerCn;
