@@ -27,7 +27,7 @@ function ca_file(string $environment): string
             $path = __DIR__ . '/../rsc/certificates/ca.test.crt';
             break;
         case ENVIRONMENT_PRODUCTION:
-            $path = __DIR__ . '/../rsc/certificates/ca.test.crt';
+            $path = __DIR__ . '/../rsc/certificates/ca.production.crt';
 
             break;
     }

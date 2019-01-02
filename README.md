@@ -1,40 +1,36 @@
 # BankID API library
 
+A SDK for providing BankID services as a RP (Relying party).
+Supports the latest v5 webservice (v3.2) 
+
 [![PHP7.1 Ready](https://img.shields.io/badge/PHP71-ready-green.svg)][link-packagist]
 [![Latest Stable Version](https://poser.pugx.org/nicklasw/bankid-sdk/v/stable)](https://packagist.org/packages/nicklasw/bankid-sdk)
 [![Latest Unstable Version](https://poser.pugx.org/nicklasw/bankid-sdk/v/unstable)](https://packagist.org/packages/nicklasw/bankid-sdk)
 [![Build Status](https://travis-ci.org/NicklasWallgren/bankid-sdk.svg?branch=master)](https://travis-ci.org/NicklasWallgren/bankid-sdk)
 [![License](https://poser.pugx.org/nicklasw/bankid-sdk/license)](https://packagist.org/packages/nicklasw/bankid-sdk)
 
-BankID API library
-
 # Installation
-You can install this by using composer 
+The library can be installed through `composer` 
 ```
 composer require nicklasw/bankid-sdk
 ```
 
 # Features
+- Supports all v5 features 
 - Supports asynchronous and parallel requests
+
+# Examples 
 
 ## Initiate authenticate request
 ```php
-AnnotationRegistry::registerLoader('class_exists');
+$client = new Client(new Config(<CERTFICATE>));
 
-$configuration = new Config(<CERTFICATE>);
-$client = new Client($configuration);
-
-$result = $client->authenticate(
-    new AuthenticationPayload(<PERSONAL NUMBER>, <IP ADDRESS>)); 
+$client->authenticate(new AuthenticationPayload(<PERSONAL NUMBER>, <IP ADDRESS>)); 
 ```
 
 ## Execute parallel requests
 ```php
-AnnotationRegistry::registerLoader('class_exists');
-
-// Example certificate for test environment.
-$configuration = new Config(<CERTIFICATE>);
-$client = new ClientAsynchronous($configuration);
+$client = new ClientAsynchronous(new Config(<CERTFICATE>));
 
 $promises[] = $client->authenticate(new AuthenticationPayload(<PERSONAL NUMBER>, <IP ADDRESS>));
 $promises[] = $client->authenticate(new AuthenticationPayload(<PERSONAL NUMBER>, <IP ADDRESS>));
@@ -47,6 +43,10 @@ foreach (unwrap($promises) as $result) {
     var_dump($result->isSuccess());
 }
 ```
+
+# Certificates
+The web service API can only be accessed by a RP that has a valid SSL client certificate. The RP certificate is obtained from the
+bank that the RP has purchased the BankID service from.
 
 ## Generate PEM certificate
 ```bash

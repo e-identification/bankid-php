@@ -18,8 +18,6 @@ use const BankID\SDK\ENVIRONMENT_TEST;
 class Config
 {
 
-    public const ENVIRONMENT_PRODUCTION = 'production';
-
     /**
      * @var string
      */
@@ -50,7 +48,7 @@ class Config
     ) {
         $this->environment = $environment;
         $this->certificate = $certificate;
-        $this->caCertificate = $caCertification ?? ca_file(self::ENVIRONMENT_PRODUCTION);
+        $this->caCertificate = $caCertification ?? ca_file(ENVIRONMENT_TEST);
 
         Assert::oneOf($environment, [ENVIRONMENT_TEST, ENVIRONMENT_PRODUCTION]);
     }
