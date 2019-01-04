@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace BankID\SDK\Responses\DTO;
 
 /**
- * Class Cancel
+ * Class CancelResponse
  *
  * @package BankID\SDK\Responses\DTO
  */

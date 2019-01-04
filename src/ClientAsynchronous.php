@@ -15,10 +15,10 @@ use BankID\SDK\Requests\Payload\CollectPayload;
 use BankID\SDK\Requests\Payload\Interfaces\PayloadInterface;
 use BankID\SDK\Requests\Payload\SignPayload;
 use BankID\SDK\Requests\SignRequest;
-use BankID\SDK\Responses\DTO\AuthenticationResponse;
+use BankID\SDK\Responses\DTO\Asynchronous\AuthenticationResponse;
+use BankID\SDK\Responses\DTO\Asynchronous\SignResponse;
 use BankID\SDK\Responses\DTO\CancelResponse;
 use BankID\SDK\Responses\DTO\CollectResponse;
-use BankID\SDK\Responses\DTO\SignResponse;
 use Doctrine\Common\Annotations\AnnotationException;
 use Doctrine\Common\Annotations\AnnotationReader;
 use Doctrine\Common\Annotations\Reader;
@@ -76,15 +76,16 @@ class ClientAsynchronous
      * Returns @code RejectedPromise on @code Exception.
      *
      * @param AuthenticationPayload $payload
+     * @param string|null $envelop The response envelope.
      * @return PromiseInterface<AuthenticationResponse>
      */
-    public function authenticate(AuthenticationPayload $payload): PromiseInterface
+    public function authenticate(AuthenticationPayload $payload, ?string $envelop = null): PromiseInterface
     {
-        return task(function () use ($payload): PromiseInterface {
+        return task(function () use ($payload, $envelop): PromiseInterface {
             // @phan-suppress-next-line PhanThrowTypeAbsentForCall
             $this->validatePrerequisites($payload);
 
-            return (new AuthenticationRequest($this, $payload))->fire();
+            return (new AuthenticationRequest($this, $payload, $envelop))->fire();
         });
     }
 
@@ -97,15 +98,16 @@ class ClientAsynchronous
      * Returns @code RejectedPromise on @code Exception.
      *
      * @param SignPayload $payload
+     * @param string|null $envelop The response envelope.
      * @return PromiseInterface<SignResponse>
      */
-    public function sign(SignPayload $payload): PromiseInterface
+    public function sign(SignPayload $payload, ?string $envelop = null): PromiseInterface
     {
-        return task(function () use ($payload): PromiseInterface {
+        return task(function () use ($payload, $envelop): PromiseInterface {
             // @phan-suppress-next-line PhanThrowTypeAbsentForCall
             $this->validatePrerequisites($payload);
 
-            return (new SignRequest($this, $payload))->fire();
+            return (new SignRequest($this, $payload, $envelop))->fire();
         });
     }
 

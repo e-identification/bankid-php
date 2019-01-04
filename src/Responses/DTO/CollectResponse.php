@@ -8,12 +8,27 @@ use BankID\SDK\Responses\DTO\Meta\CompletionData;
 use Tebru\Gson\Annotation\SerializedName;
 
 /**
- * Class Collect
+ * Class CollectResponse
  *
  * @package BankID\SDK\Responses\DTO
  */
 class CollectResponse extends Envelope
 {
+
+    /**
+     * The order is being processed. hintCode describes the status of the order.
+     */
+    public const STATUS_PENDING = 'pending';
+
+    /**
+     * Something went wrong with the order. hintCode describes the error.
+     */
+    public const STATUS_COMPLETE = 'complete';
+
+    /**
+     * The order is complete. completionData holds user information
+     */
+    public const STATUS_FAILED = 'failed';
 
     /**
      * The order is pending. The client has not yet received the order.
@@ -143,5 +158,36 @@ class CollectResponse extends Envelope
     public function getCompletionData(): ?CompletionData
     {
         return $this->completionData;
+    }
+
+    /**
+     * Returns true if the order is being processed, false otherwise.
+     *
+     * @return bool
+     */
+    public function isPending(): bool
+    {
+        return $this->status === self::STATUS_PENDING;
+    }
+
+    /**
+     * Returns true if the order is complete, false otherwise.
+     *
+     * @return bool
+     */
+    public function isComplete(): bool
+    {
+        return $this->status === self::STATUS_COMPLETE;
+    }
+
+
+    /**
+     * Returns true if something went wrong with the order, false otherwise.
+     *
+     * @return bool
+     */
+    public function isFailed(): bool
+    {
+        return $this->status === self::STATUS_FAILED;
     }
 }

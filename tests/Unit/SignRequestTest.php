@@ -7,7 +7,7 @@ use BankID\SDK\Configuration\Config;
 use BankID\SDK\Requests\Payload\Meta\RequirementMeta;
 use BankID\SDK\Requests\Payload\Serializers\PayloadSerializer;
 use BankID\SDK\Requests\Payload\SignPayload;
-use BankID\SDK\Responses\DTO\SignResponse;
+use BankID\SDK\Responses\DTO\Asynchronous\SignResponse;
 use BankID\SDK\Tests\Mock\Traits\ClientMockTrait;
 use BankID\SDK\Tests\TestCase;
 use Doctrine\Common\Annotations\AnnotationReader;

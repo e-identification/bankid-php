@@ -7,7 +7,7 @@ namespace BankID\SDK\Requests;
 use BankID\SDK\ClientAsynchronous;
 use BankID\SDK\Http\Builders\GenericRequestBuilder;
 use BankID\SDK\Requests\Payload\AuthenticationPayload;
-use BankID\SDK\Responses\DTO\AuthenticationResponse;
+use BankID\SDK\Responses\DTO\Asynchronous\AuthenticationResponse;
 use BankID\SDK\Responses\Serializers\ResponseSerializer;
 use GuzzleHttp\Promise\PromiseInterface;
 use function GuzzleHttp\Promise\task;
@@ -35,17 +35,24 @@ class AuthenticationRequest extends Request
     protected $payload;
 
     /**
+     * @var string
+     */
+    protected $envelope;
+
+    /**
      * AuthenticationRequest constructor.
      *
-     * @param ClientAsynchronous                $client
+     * @param ClientAsynchronous $client
      * @param AuthenticationPayload $payload
+     * @param string|null $envelope
      */
-    public function __construct(ClientAsynchronous $client, AuthenticationPayload $payload)
+    public function __construct(ClientAsynchronous $client, AuthenticationPayload $payload, ?string $envelope = null)
     {
         parent::__construct($client->getClient(), $client->getAnnotationReader(), $client->getConfig());
 
         $this->client = $client;
         $this->payload = $payload;
+        $this->envelope = $envelope ?? AuthenticationResponse::class;
     }
 
     /**
@@ -60,8 +67,9 @@ class AuthenticationRequest extends Request
             $request = (new GenericRequestBuilder(self::URI, $this->config, $this->annotationReader))
                 ->setPayload($this->payload);
 
+
             // Return a promise chain
-            return $this->request($request->build(), new ResponseSerializer(new AuthenticationResponse($this->client)));
+            return $this->request($request->build(), new ResponseSerializer(new $this->envelope($this->client)));
         });
     }
 }

@@ -52,15 +52,13 @@ class Client
      * @description Use the collect method to query the status of the order.
      * If the request is successful, the orderRef and autoStartToken is returned.
      *
-     * Returns @code RejectedPromise on @code Exception.
-     *
      * @param AuthenticationPayload $payload
      * @return AuthenticationResponse
      * @throws Exception
      */
     public function authenticate(AuthenticationPayload $payload): AuthenticationResponse
     {
-        return $this->client->authenticate($payload)->wait(true);
+        return $this->client->authenticate($payload, AuthenticationResponse::class)->wait(true);
     }
 
     /**
@@ -68,8 +66,6 @@ class Client
      *
      * @description Use the collect method to query the status of the order.
      * If the request is successful, the orderRef and autoStartToken is returned.
-     *
-     * Returns @code RejectedPromise on @code Exception.
      *
      * @param SignPayload $payload
      * @return SignResponse
