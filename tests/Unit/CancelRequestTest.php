@@ -7,16 +7,13 @@ use BankID\SDK\Configuration\Config;
 use BankID\SDK\Requests\Payload\CancelPayload;
 use BankID\SDK\Requests\Payload\Meta\RequirementMeta;
 use BankID\SDK\Requests\Payload\Serializers\PayloadSerializer;
-use BankID\SDK\Requests\Payload\SignPayload;
 use BankID\SDK\Responses\DTO\CancelResponse;
-use BankID\SDK\Responses\DTO\SignResponse;
 use BankID\SDK\Tests\Mock\Traits\ClientMockTrait;
 use BankID\SDK\Tests\TestCase;
 use Doctrine\Common\Annotations\AnnotationReader;
 use Exception;
 use GuzzleHttp\Promise\PromiseInterface;
 use GuzzleHttp\Psr7\Response;
-use const BankID\SDK\Responses\ERROR_CODE_ALREADY_IN_PROGRESS;
 
 class CancelRequestTest extends TestCase
 {

@@ -1,8 +1,8 @@
-# BankID API library
+# BankID SDK library
 
 A SDK for providing BankID services as a RP (Relying party).
-Supports the latest v5 webservice (v3.2) 
-
+Supports the latest v5 features.
+  
 [![PHP7.1 Ready](https://img.shields.io/badge/PHP71-ready-green.svg)][link-packagist]
 [![Latest Stable Version](https://poser.pugx.org/nicklasw/bankid-sdk/v/stable)](https://packagist.org/packages/nicklasw/bankid-sdk)
 [![Latest Unstable Version](https://poser.pugx.org/nicklasw/bankid-sdk/v/unstable)](https://packagist.org/packages/nicklasw/bankid-sdk)
@@ -11,12 +11,12 @@ Supports the latest v5 webservice (v3.2)
 
 # Installation
 The library can be installed through `composer` 
-```
+```bash
 composer require nicklasw/bankid-sdk
 ```
 
 # Features
-- Supports all v5 features 
+- Supports all v5 features
 - Supports asynchronous and parallel requests
 
 # Examples 
@@ -25,7 +25,15 @@ composer require nicklasw/bankid-sdk
 ```php
 $client = new Client(new Config(<CERTFICATE>));
 
-$client->authenticate(new AuthenticationPayload(<PERSONAL NUMBER>, <IP ADDRESS>)); 
+$authenticationResponse = $client->authenticate(new AuthenticationPayload(<PERSONAL NUMBER>, <IP ADDRESS>));
+
+if (!$authenticationResponse->isSuccess()) {
+    var_dump($authenticationResponse->getErrorCode(), $authenticationResponse->getDetails());
+
+    return;
+}
+
+$collectResponse = $authenticationResponse->collect(); 
 ```
 
 ## Execute parallel requests

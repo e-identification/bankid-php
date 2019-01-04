@@ -2,18 +2,20 @@
 
 declare(strict_types=1);
 
-namespace BankID\SDK\Responses\DTO;
+namespace BankID\SDK\Responses\DTO\Asynchronous;
 
 use BankID\SDK\ClientAsynchronous;
 use BankID\SDK\Requests\Payload\CancelPayload;
 use BankID\SDK\Requests\Payload\CollectPayload;
-use Exception;
+use BankID\SDK\Responses\DTO\Envelope;
+use GuzzleHttp\Promise\PromiseInterface;
+use function GuzzleHttp\Promise\rejection_for;
 use Tebru\Gson\Annotation\SerializedName;
 
 /**
  * Class AuthenticationResponse
  *
- * @package BankID\SDK\Responses\DTO
+ * @package BankID\SDK\Responses\DTO\Asynchronous
  */
 class AuthenticationResponse extends Envelope
 {
@@ -68,36 +70,34 @@ class AuthenticationResponse extends Envelope
     /**
      * Collects the result of a sign or auth order using the orderRef as reference.
      *
-     * @return CollectResponse
-     * @throws Exception
+     * @return PromiseInterface
      */
-    public function collect(): CollectResponse
+    public function collect(): PromiseInterface
     {
         if (!$this->isSuccess()) {
-            throw new Exception(\sprintf(
-                'Action not possible. Possible cause: %s',
+            return rejection_for(new \Exception(\sprintf(
+                'Action not possible. Order reference invalid. Possible cause: %s',
                 $this->getDetails()
-            ));
+            )));
         }
 
-        return $this->client->collect(new CollectPayload($this->orderRef))->wait(true);
+        return $this->client->collect(new CollectPayload($this->orderRef));
     }
 
     /**
      * Cancels an ongoing sign or auth order.
      *
-     * @return CancelResponse
-     * @throws Exception
+     * @return PromiseInterface
      */
-    public function cancel(): CancelResponse
+    public function cancel(): PromiseInterface
     {
         if (!$this->isSuccess()) {
-            throw new \Exception(\sprintf(
-                'Action not possible. Possible cause: %s',
+            return rejection_for(new \Exception(\sprintf(
+                'Action not possible. Order reference invalid. Possible cause: %s',
                 $this->getDetails()
-            ));
+            )));
         }
 
-        return $this->client->cancel(new CancelPayload($this->orderRef))->wait(true);
+        return $this->client->cancel(new CancelPayload($this->orderRef));
     }
 }
